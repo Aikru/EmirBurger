@@ -39,6 +39,25 @@ Command.init(
     sequelize,
     modelName: "command",
   }
+
+  
 );
 
+  // Many to Many Command & Product
+
+  Command.belongsToMany(Product, {
+    as: "product",
+    through: "product_command",
+    foreignKey: "command_id",
+    otherKey: "product_id",
+    timestamps: false,
+  });
+  
+  Product.belongsToMany(Command, {
+    as: "command",
+    through: "product_command",
+    foreignKey: "product_id",
+    otherKey: "command_id",
+    timestamps: false,
+  })
 module.exports = Command;
