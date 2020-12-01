@@ -26,9 +26,6 @@ Command.init(
     },
 
     
-    reduced_ingredients: {
-        //manytomany product
-      },
 
 
 

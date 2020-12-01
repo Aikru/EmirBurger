@@ -11,9 +11,9 @@ Product.init(
     },
 
     category: {
-      //TODO Boisson||dessert||Burger||Accompagnement||Sauce
       type: DataTypes.STRING,
       allowNull: false,
+      values: ["Drink", "Dessert", "Burger", "Side dish", "Sauce"],
     },
 
     price: {
