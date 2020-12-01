@@ -27,4 +27,4 @@ Ingredient.init(
   }
 );
 
-module.exports = ingrédient;
+module.exports = Ingredient;

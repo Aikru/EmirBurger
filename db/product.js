@@ -28,4 +28,4 @@ Product.init(
   }
 );
 
-module.exports = ingrédient;
+module.exports = Product;
