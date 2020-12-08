@@ -24,7 +24,7 @@ Product.init(
 
   {
     sequelize,
-    modelName: "product",
+    modelName: "products",
   }
 );
 
