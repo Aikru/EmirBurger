@@ -5,13 +5,13 @@ const { DataTypes } = require("sequelize"); // Import the built-in data types
 class Command extends Sequelize.Model {}
 Command.init(
   {
-    eat_in?: {
+    eat_in: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: false,
     },
 
     date: {
-      type: DataTypes.Date,
+      type: DataTypes.DATE,
       defaultValue: Sequelize.NOW,
     },
 
@@ -20,44 +20,33 @@ Command.init(
       defaultValue: false,
     },
 
-
-    product: {
-      //ManyToMany  
-    },
-
-    
-
-
-
     total: {
       type: DataTypes.INTEGER,
-      defaultValue: 0
+      defaultValue: 0,
     },
   },
 
   {
     sequelize,
-    modelName: "command",
+    modelName: "orders",
   }
-
-  
 );
 
-  // Many to Many Command & Product
+// Many to Many Command & Product
 
-  Command.belongsToMany(Product, {
-    as: "product",
-    through: "product_command",
-    foreignKey: "command_id",
-    otherKey: "product_id",
-    timestamps: false,
-  });
-  
-  Product.belongsToMany(Command, {
-    as: "command",
-    through: "product_command",
-    foreignKey: "product_id",
-    otherKey: "command_id",
-    timestamps: false,
-  })
+// Command.belongsToMany(Product, {
+//   as: "product",
+//   through: "product_command",
+//   foreignKey: "command_id",
+//   otherKey: "product_id",
+//   timestamps: false,
+// });
+
+// Product.belongsToMany(Command, {
+//   as: "command",
+//   through: "product_command",
+//   foreignKey: "product_id",
+//   otherKey: "command_id",
+//   timestamps: false,
+// });
 module.exports = Command;
