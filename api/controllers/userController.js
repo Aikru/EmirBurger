@@ -9,6 +9,14 @@ const getAllUsers = () =>
 
 const createUser = async ({ username, password, email }) => {
   try {
+    if (
+      User.findOne({
+        where: { email: email },
+      })
+    ) {
+      throw new Error("Email déjà utilisé");
+    }
+
     const EncryptedPassword = await generateEncryptedPassword(password);
     const user = await User.create({
       username,
@@ -46,6 +54,14 @@ const updateUser = async (id, { username, password, email }) => {
     );
 
     if (!user) return null;
+
+    if (
+      User.findOne({
+        where: { email: email },
+      })
+    ) {
+      throw new Error("Email déjà utilisé");
+    }
 
     user.username = username;
     user.email = email;
