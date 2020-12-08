@@ -9,16 +9,12 @@ const getAllUsers = () =>
 
 const createUser = async ({ username, password, email }) => {
   try {
-    const EncryptedPassword = await generateEncryptedPassword(
-      { password }.toString()
-    );
-    const user = await User.create(
-      {
-        username,
-        email,
-      },
-      EncryptedPassword
-    );
+    const EncryptedPassword = await generateEncryptedPassword(password);
+    const user = await User.create({
+      username,
+      email,
+      password: EncryptedPassword,
+    });
 
     return {
       id: user.id,
