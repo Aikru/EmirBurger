@@ -20,6 +20,11 @@ Product.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+
+    url: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
 
   {
