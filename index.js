@@ -7,12 +7,12 @@ const productRouter = require("./api/routes/productRouter");
 const authMiddleware = require("./api/middlewares/authentification");
 
 // Uncomment and write in the console "npm run serve" to setup db automatiquely
-// require("./db/command");
-// require("./db/ingredient");
-// require("./db/product");
-// require("./db/user");
-// const { sequelize } = require("./db/connection");
-// sequelize.sync({ alter: true });
+require("./db/order");
+require("./db/ingredient");
+require("./db/product");
+require("./db/user");
+const { sequelize } = require("./db/connection");
+sequelize.sync({ alter: true });
 
 const hostname = "localhost";
 const port = 4000;

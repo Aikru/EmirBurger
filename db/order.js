@@ -1,9 +1,10 @@
 const Sequelize = require("sequelize");
 const { sequelize } = require("./connection");
 const { DataTypes } = require("sequelize"); // Import the built-in data types
+const Product = require("./product");
 
-class Command extends Sequelize.Model {}
-Command.init(
+class Order extends Sequelize.Model {}
+Order.init(
   {
     eat_in: {
       type: DataTypes.BOOLEAN,
@@ -32,21 +33,8 @@ Command.init(
   }
 );
 
-// Many to Many Command & Product
+// Many to Many order & Product
+Order.belongsToMany(Product, { through: "Order_Products" });
+Product.belongsToMany(Order, { through: "Order_Products" });
 
-// Command.belongsToMany(Product, {
-//   as: "product",
-//   through: "product_command",
-//   foreignKey: "command_id",
-//   otherKey: "product_id",
-//   timestamps: false,
-// });
-
-// Product.belongsToMany(Command, {
-//   as: "command",
-//   through: "product_command",
-//   foreignKey: "product_id",
-//   otherKey: "command_id",
-//   timestamps: false,
-// });
-module.exports = Command;
+module.exports = Order;

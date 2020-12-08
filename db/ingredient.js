@@ -30,20 +30,7 @@ Ingredient.init(
 
 //ManyToMany ingredients_Products
 
-// Product.belongsToMany(Ingredients, {
-//   as: "ingredients",
-//   through: "product_ingredients",
-//   foreignKey: "product_id",
-//   otherKey: "ingredient_id",
-//   timestamps: false,
-// });
-
-// Ingredient.belongsToMany(Product, {
-//   as: "ingredients",
-//   through: "product_ingredients",
-//   foreignKey: "ingredient_id",
-//   otherKey: "product_id",
-//   timestamps: false,
-// });
+Ingredient.belongsToMany(Product, { through: "ingredients_Products" });
+Product.belongsToMany(Ingredient, { through: "ingredients_Products" });
 
 module.exports = Ingredient;
