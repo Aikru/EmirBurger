@@ -3,6 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const loginRouter = require("./api/routes/loginRouter");
 const userRouter = require("./api/routes/userRouter");
+const productRouter = require("./api/routes/productRouter");
+const authMiddleware = require("./api/middlewares/authentification");
 
 // Uncomment and write in the console "npm run serve" to setup db automatiquely
 // require("./db/command");
@@ -22,6 +24,7 @@ app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodie
 
 app.use("/api", loginRouter);
 app.use("/api/user", userRouter);
+app.use("/test", [authMiddleware], productRouter);
 
 app.listen(port, hostname, function () {
   console.log("Mon serveur fonctionne sur http://" + hostname + ":" + port);
