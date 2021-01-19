@@ -25,8 +25,8 @@ const login = async ({ email, password }) => {
       throw new Error("Email / Mot de passe incorrect");
     }
 
-    const accessToken = jwt.sign({ userId: user.id }, process.env.AUTH_SECRET);
-
+    const accessToken = jwt.sign({ userId: user.id }, process.env.AUTH_SECRET, {expiresIn: "1d"});
+ 
     return {
       accessToken,
       userId: user.id,

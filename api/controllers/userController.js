@@ -2,20 +2,22 @@ const User = require("../../db/user");
 const { generateEncryptedPassword } = require("../utils/password");
 const usersWantedAttributes = ["id", "username", "email", "password"];
 
+
+
 const getAllUsers = () =>
   User.findAll({
     attributes: usersWantedAttributes,
   });
 
 const createUser = async ({ username, password, email }) => {
-  try {
-    if (
-      User.findOne({
-        where: { email: email },
-      })
-    ) {
-      throw new Error("Email déjà utilisé");
-    }
+ // try {
+    // if (
+    //   User.findOne({
+    //     where: { email: email },
+    //   })
+    // ) {
+    //   throw new Error("Email déjà utilisé");
+    // }
 
     const EncryptedPassword = await generateEncryptedPassword(password);
     const user = await User.create({
@@ -30,9 +32,9 @@ const createUser = async ({ username, password, email }) => {
       password: EncryptedPassword,
       email: user.email,
     };
-  } catch (error) {
-    throw error;
-  }
+  // } catch (error) {
+  //   throw error;
+  // }
 };
 
 const getUser = (id) => {

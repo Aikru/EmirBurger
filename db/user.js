@@ -17,6 +17,15 @@ Users.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      enum: ["USER", "WORKER", "ADMIN"],
+      defaultValue: "USER",
+      
+
+    },
   },
 
   {
