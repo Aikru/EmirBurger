@@ -10,14 +10,14 @@ ac.grant("USER")
 
 
 ac.grant("WORKER")
- .extend("basic")
+ .extend("USER")
  .readAny("orders")
  .updateAny("orders")
 
 
 ac.grant("ADMIN")
- .extend("basic")
- .extend("supervisor")
+ .extend("USER")
+ .extend("WORKER")
 
  .createAny("products")
  .updateAny("products")
@@ -28,4 +28,4 @@ ac.grant("ADMIN")
  .deleteAny("ingredients")
 
 return ac;
-})();
+});

@@ -20,6 +20,11 @@ Order.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    
+    is_archived: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
 
     total: {
       type: DataTypes.INTEGER,

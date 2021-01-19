@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+
+const ac = require("../utils/role")
+
 const { param, body, validationResult } = require("express-validator");
 const {
   getAllUsers,
@@ -11,6 +14,12 @@ const {
 
 // Get All
 router.get("/", async (req, res) => {
+  
+  const permission = ac.can(req.user.userRole).GetAny('users');
+
+if (!permission.granted ) {
+  return res.status(403).end();}
+  
   try {
     const users = await getAllUsers();
     return res.send(users);
@@ -36,6 +45,11 @@ router.post("/", [body("email").isEmail()], async (req, res) => {
 
 // Get one
 router.get("/:id", [param("id").isInt()], async (req, res) => {
+  
+  const permissionOwn = ac.can(req.user.userRole).GetOwn('users') 
+if (!permissionOwn && param("id") === req.user.id || !ac.can(req.user.userRole).GetAny("users")) {
+  return res.status(403).end();}
+  
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
@@ -54,6 +68,13 @@ router.get("/:id", [param("id").isInt()], async (req, res) => {
 
 // Edit one
 router.put("/:id", [param("id").isInt()], async (req, res) => {
+
+  const permissionOwn = ac.can(req.user.userRole).UpdateOwn('users') 
+
+if (!permissionOwn && param("id") === req.user.id || !ac.can(req.user.userRole).UpdateAny("users")) {
+    return res.status(403).end();}
+    
+  
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
@@ -72,6 +93,12 @@ router.put("/:id", [param("id").isInt()], async (req, res) => {
 
 // Delete one
 router.delete("/:id", [param("id").isInt()], async (req, res) => {
+  
+  const permissionOwn = ac.can(req.user.userRole).DeleteOwn('users') 
+
+if (!permissionOwn && param("id") === req.user.id || !ac.can(req.user.userRole).DeleteAny("users")) {
+    return res.status(403).end();}
+
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });

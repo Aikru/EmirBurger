@@ -2,13 +2,20 @@ const User = require("../../db/user");
 const { generateEncryptedPassword } = require("../utils/password");
 const usersWantedAttributes = ["id", "username", "email", "password"];
 
+const accesscontrol = require("../utils/role")
+const ac = accesscontrol.roles
 
 
-const getAllUsers = () =>
+const getAllUsers = () => {
+  const permission = ac.can(req.user.userRole).readAny('user');
+  if (!permission.granted) {
+      return res.status(403).end();
+  }
+  
   User.findAll({
     attributes: usersWantedAttributes,
   });
-
+}
 const createUser = async ({ username, password, email }) => {
  // try {
     // if (
@@ -38,6 +45,9 @@ const createUser = async ({ username, password, email }) => {
 };
 
 const getUser = (id) => {
+
+  
+
   try {
     return User.findOne({
       where: { id },
@@ -49,6 +59,16 @@ const getUser = (id) => {
 };
 
 const updateUser = async (id, { username, password, email }) => {
+
+
+  const permission = ac.can(req.user.userRole).UpdateAny('user');
+  const permissionOwn = ac.can(req.user.userRole).UpdateOwn('user');
+
+if (!permission.granted || (permissionOwn && id === req.user.id )) {
+  return res.status(403).end();}
+
+ 
+ 
   try {
     const user = await User.findOne({ where: { id } });
     const encryptedPassword = await generateEncryptedPassword(
