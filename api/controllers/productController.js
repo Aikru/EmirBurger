@@ -1,10 +1,10 @@
 const Product = require("../../db/product");
-const usersWantedAttributes = ["id", "name", "category", "price", "url"];
+const ProductWantedAttributes = ["id", "name", "category", "price", "url"];
 
 const getAllProduct = () => {
   try {
     return Product.findAll({
-      attributes: usersWantedAttributes,
+      attributes: ProductWantedAttributes,
     });
   } catch (error) {
     throw error;
@@ -41,5 +41,4 @@ module.exports = {
   getAllProduct,
   createProduct,
   deleteProduct,
-  usersWantedAttributes,
 };

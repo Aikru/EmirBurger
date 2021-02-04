@@ -2,7 +2,7 @@ const User = require("../../db/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const usersWantedAttributes = ["id", "username", "email", "password"];
+const loginWantedAttributes = ["id", "username", "email", "password"];
 
 const login = async ({ email, password }) => {
   try {
@@ -10,7 +10,7 @@ const login = async ({ email, password }) => {
       where: {
         email: email,
       },
-      attributes: usersWantedAttributes,
+      attributes: loginWantedAttributes,
     });
     if (!user) {
       throw new Error("Email / Mot de passe incorrect");
@@ -25,8 +25,10 @@ const login = async ({ email, password }) => {
       throw new Error("Email / Mot de passe incorrect");
     }
 
-    const accessToken = jwt.sign({ userId: user.id }, process.env.AUTH_SECRET, {expiresIn: "1d"});
- 
+    const accessToken = jwt.sign({ userId: user.id }, process.env.AUTH_SECRET, {
+      expiresIn: "1d",
+    });
+
     return {
       accessToken,
       userId: user.id,
