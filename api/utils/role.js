@@ -29,7 +29,10 @@ const role = (function () {
     .createAny("ingredients")
     .readAny("ingredients")
     .updateAny("ingredients")
-    .deleteAny("ingredients");
+    .deleteAny("ingredients")
+
+    .createAny("orders")
+    .deleteAny("orders");
 
   return ac;
 })();

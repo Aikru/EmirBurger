@@ -45,9 +45,9 @@ router.post("/", [body("email").isEmail()], async (req, res) => {
 
 // Get one
 router.get("/:id", [param("id").isInt()], async (req, res) => {
-  const permission = ac.roles.can(req.user.role).readOwn("users");
+  const permissionOwn = ac.roles.can(req.user.role).readOwn("users");
   if (
-    (!permissionOwn && param("id") === req.user.id) ||
+    (!permissionOwn.granted && param("id") === req.user.id) ||
     !ac.can(req.user.role).GetAny("users")
   ) {
     return res.status(403).end();
