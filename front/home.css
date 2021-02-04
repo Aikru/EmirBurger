@@ -1,0 +1,19 @@
+body {
+    height: 100vh;
+    width: 100vw;
+}
+.container {
+    width: 30vw;
+    height: 100vh;
+    margin-left: 0px;
+
+}
+div {
+    background-color: aquamarine;
+    padding-top: 3vh;
+}
+
+a {
+    margin-top: 8vh;
+}
+
