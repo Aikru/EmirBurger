@@ -10,7 +10,7 @@ var transporter = nodeMailer.createTransport({
     }
   });
   
-  var sendMail = (userMail, subject, mail) => {
+  const sendMail = (userMail, subject, mail) => {
     const mailConstruct =  {from: 'noresponse@emirburger.fr',
     to: userMail,
     subject: subject,
@@ -25,4 +25,4 @@ var transporter = nodeMailer.createTransport({
     }
   });
 };
-  module.exports = {sendMail, }
+  module.exports = {sendMail }

@@ -18,6 +18,8 @@ const authMiddleware = async (req, res, next) => {
       throw new Error("Connexion invalide, veuillez vous reconnecter");
     }
 
+    req.user = user;
+
     next();
   } catch (error) {
     res.status(401).json({

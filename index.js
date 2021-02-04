@@ -23,8 +23,8 @@ app.use(express.json()); // to support JSON-encoded bodies
 app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodies
 
 app.use("/api", loginRouter);
-app.use("/api/user", userRouter);
-app.use("/test", [authMiddleware], productRouter);
+app.use("/api/user", [authMiddleware], userRouter);
+app.use("/api/product", [authMiddleware], productRouter);
 
 app.listen(port, hostname, function () {
   console.log("Mon serveur fonctionne sur http://" + hostname + ":" + port);

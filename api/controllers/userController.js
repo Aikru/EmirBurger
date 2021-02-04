@@ -2,52 +2,43 @@ const User = require("../../db/user");
 const { generateEncryptedPassword } = require("../utils/password");
 const usersWantedAttributes = ["id", "username", "email", "password"];
 
-const accesscontrol = require("../utils/role")
-const ac = accesscontrol.roles
-
+const accesscontrol = require("../utils/role");
+const ac = accesscontrol.roles;
 
 const getAllUsers = () => {
-  const permission = ac.can(req.user.userRole).readAny('user');
-  if (!permission.granted) {
-      return res.status(403).end();
-  }
-  
-  User.findAll({
+  return User.findAll({
     attributes: usersWantedAttributes,
   });
-}
+};
 const createUser = async ({ username, password, email }) => {
- // try {
-    // if (
-    //   User.findOne({
-    //     where: { email: email },
-    //   })
-    // ) {
-    //   throw new Error("Email déjà utilisé");
-    // }
+  // try {
+  // if (
+  //   User.findOne({
+  //     where: { email: email },
+  //   })
+  // ) {
+  //   throw new Error("Email déjà utilisé");
+  // }
 
-    const EncryptedPassword = await generateEncryptedPassword(password);
-    const user = await User.create({
-      username,
-      email,
-      password: EncryptedPassword,
-    });
+  const EncryptedPassword = await generateEncryptedPassword(password);
+  const user = await User.create({
+    username,
+    email,
+    password: EncryptedPassword,
+  });
 
-    return {
-      id: user.id,
-      username: user.username,
-      password: EncryptedPassword,
-      email: user.email,
-    };
+  return {
+    id: user.id,
+    username: user.username,
+    password: EncryptedPassword,
+    email: user.email,
+  };
   // } catch (error) {
   //   throw error;
   // }
 };
 
 const getUser = (id) => {
-
-  
-
   try {
     return User.findOne({
       where: { id },
@@ -59,16 +50,13 @@ const getUser = (id) => {
 };
 
 const updateUser = async (id, { username, password, email }) => {
+  const permission = ac.can(req.user.role).updateAny("user");
+  const permissionOwn = ac.can(req.user.role).updateOwn("user");
 
+  if (!permission.granted || (permissionOwn && id === req.user.id)) {
+    return res.status(403).end();
+  }
 
-  const permission = ac.can(req.user.userRole).UpdateAny('user');
-  const permissionOwn = ac.can(req.user.userRole).UpdateOwn('user');
-
-if (!permission.granted || (permissionOwn && id === req.user.id )) {
-  return res.status(403).end();}
-
- 
- 
   try {
     const user = await User.findOne({ where: { id } });
     const encryptedPassword = await generateEncryptedPassword(

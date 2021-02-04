@@ -1,31 +1,36 @@
 const AccessControl = require("accesscontrol");
 const ac = new AccessControl();
 
-exports.roles = (function() {
-ac.grant("USER")
-.createOwn("orders")
- .readOwn("orders")
- .readAny("products")
- .readAny("ingredients")
+const role = (function () {
+  ac.grant("USER")
+    .createOwn("orders")
+    .readOwn("orders")
+    .readAny("products")
+    .readAny("ingredients")
+    .deleteOwn("users")
+    .readOwn("users");
 
+  ac.grant("WORKER").extend("USER").readAny("orders").updateAny("orders");
 
-ac.grant("WORKER")
- .extend("USER")
- .readAny("orders")
- .updateAny("orders")
+  ac.grant("ADMIN")
+    .extend("USER")
+    .extend("WORKER")
 
+    .createAny("products")
+    .readAny("products")
+    .updateAny("products")
+    .deleteAny("products")
 
-ac.grant("ADMIN")
- .extend("USER")
- .extend("WORKER")
+    .createAny("users")
+    .readAny("users")
+    .updateAny("users")
+    .deleteAny("users")
 
- .createAny("products")
- .updateAny("products")
- .deleteAny("products")
+    .createAny("ingredients")
+    .readAny("ingredients")
+    .updateAny("ingredients")
+    .deleteAny("ingredients");
 
- .createAny("ingredients")
- .updateAny("ingredients")
- .deleteAny("ingredients")
-
-return ac;
-});
+  return ac;
+})();
+module.exports = role;
