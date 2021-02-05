@@ -38,8 +38,17 @@ Order.init(
   }
 );
 
-// Many to Many order & Product
-Order.belongsToMany(Product, { through: "Order_Products" });
-Product.belongsToMany(Order, { through: "Order_Products" });
+// // Many to Many Order & Product
+Order.belongsToMany(Product, {
+  as: "orders",
+  through: "order_product",
+  foreignKey: "order_id",
+  otherKey: "product_id",
+});
+
+Product.belongsToMany(Order, {
+  as: "products",
+  through: "order_product",
+});
 
 module.exports = Order;

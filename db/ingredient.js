@@ -1,7 +1,6 @@
 const Sequelize = require("sequelize");
 const { sequelize } = require("./connection");
 const { DataTypes } = require("sequelize");
-const Product = require("./product");
 
 class Ingredient extends Sequelize.Model {}
 Ingredient.init(
@@ -27,10 +26,5 @@ Ingredient.init(
     modelName: "ingredients",
   }
 );
-
-//ManyToMany ingredients_Products
-
-Ingredient.belongsToMany(Product, { through: "ingredients_Products" });
-Product.belongsToMany(Ingredient, { through: "ingredients_Products" });
 
 module.exports = Ingredient;

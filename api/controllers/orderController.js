@@ -1,16 +1,31 @@
+const Ingredient = require("../../db/ingredient");
 const Order = require("../../db/order");
+
 const OrderWantedAttributes = [
   "eat_in",
   "date",
   "has_been_paid",
   "is_archived",
   "total",
+  "ingredients",
 ];
 
 const getAllOrder = () => {
   try {
     return Order.findAll({
       attributes: OrderWantedAttributes,
+      include: [
+        {
+          model: Ingredient,
+          attributes: ingredientsWantedAttributes,
+          as: "ingredients",
+        },
+        {
+          model: order,
+          attributes: orderWantedAttributes,
+          as: "commandes",
+        },
+      ],
     });
   } catch (error) {
     throw error;
@@ -44,7 +59,6 @@ const createOrder = async ({
 
 const deleteOrder = (id) => {
   try {
-    console.log("INNNNNNNNNNNNNNNNNNNNN");
     return Order.destroy({ where: { id } });
   } catch (error) {
     throw error;
